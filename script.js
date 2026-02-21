@@ -64,4 +64,99 @@ document.addEventListener("DOMContentLoaded", () => {
             setMember(defaultButton);
         }
     }
+
+    const galleryItems = Array.from(document.querySelectorAll("[data-gallery-item]"));
+    const lightbox = document.getElementById("photo-lightbox");
+    const lightboxImage = lightbox?.querySelector(".lightbox-image");
+    const lightboxCaption = lightbox?.querySelector(".lightbox-caption");
+    const closeButton = lightbox?.querySelector(".lightbox-close");
+    const prevButton = lightbox?.querySelector(".lightbox-nav.prev");
+    const nextButton = lightbox?.querySelector(".lightbox-nav.next");
+    let currentIndex = -1;
+
+    if (galleryItems.length && lightbox && lightboxImage && lightboxCaption && closeButton && prevButton && nextButton) {
+        const setImage = (index) => {
+            currentIndex = (index + galleryItems.length) % galleryItems.length;
+            const item = galleryItems[currentIndex];
+            const src = item.dataset.full || "";
+            const alt = item.dataset.alt || "Galerijfoto";
+            lightboxImage.src = src;
+            lightboxImage.alt = alt;
+            lightboxCaption.textContent = alt;
+        };
+
+        const openLightbox = (index) => {
+            setImage(index);
+            lightbox.classList.add("is-open");
+            lightbox.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        };
+
+        const closeLightbox = () => {
+            lightbox.classList.remove("is-open");
+            lightbox.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        };
+
+        galleryItems.forEach((item, index) => {
+            item.addEventListener("click", () => openLightbox(index));
+        });
+
+        closeButton.addEventListener("click", closeLightbox);
+        prevButton.addEventListener("click", () => setImage(currentIndex - 1));
+        nextButton.addEventListener("click", () => setImage(currentIndex + 1));
+
+        lightbox.addEventListener("click", (event) => {
+            if (event.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (!lightbox.classList.contains("is-open")) {
+                return;
+            }
+
+            if (event.key === "Escape") {
+                closeLightbox();
+            } else if (event.key === "ArrowLeft") {
+                setImage(currentIndex - 1);
+            } else if (event.key === "ArrowRight") {
+                setImage(currentIndex + 1);
+            }
+        });
+    }
+
+    const nextFirstThursdayLabel = document.getElementById("next-first-thursday");
+    if (nextFirstThursdayLabel) {
+        const now = new Date();
+        let year = now.getFullYear();
+        let month = now.getMonth();
+
+        const getFirstThursday = (targetYear, targetMonth) => {
+            const firstDay = new Date(targetYear, targetMonth, 1);
+            const dayOfWeek = firstDay.getDay();
+            const offset = (4 - dayOfWeek + 7) % 7;
+            return new Date(targetYear, targetMonth, 1 + offset);
+        };
+
+        let nextDate = getFirstThursday(year, month);
+        if (now > nextDate) {
+            month += 1;
+            if (month > 11) {
+                month = 0;
+                year += 1;
+            }
+            nextDate = getFirstThursday(year, month);
+        }
+
+        const formatted = nextDate.toLocaleDateString("nl-NL", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+        });
+
+        nextFirstThursdayLabel.textContent = `Eerstvolgende eerste donderdag: ${formatted}`;
+    }
 });
