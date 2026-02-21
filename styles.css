@@ -248,6 +248,25 @@ a {
     border-bottom: 1px solid rgba(26, 24, 22, 0.08);
 }
 
+.band-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.band-section::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    background-image: var(--band-backdrop);
+    background-size: cover;
+    background-position: 50% 35%;
+    filter: blur(18px) saturate(0.95);
+    transform: scale(1.05);
+    opacity: 0.14;
+    z-index: 0;
+    pointer-events: none;
+}
+
 .section-head {
     display: flex;
     align-items: flex-end;
@@ -454,11 +473,49 @@ a {
     grid-column: span 5;
 }
 
-.band-photo img {
+.band-photo > img {
     width: 100%;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     object-fit: cover;
+}
+
+.band-photo-duo {
+    position: relative;
+    min-height: 360px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.band-photo-duo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(26, 24, 22, 0.05) 0%, rgba(26, 24, 22, 0.22) 100%);
+    pointer-events: none;
+}
+
+.band-photo-duo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.band-photo-main {
+    position: absolute;
+    inset: 0;
+}
+
+.band-photo-alt {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: min(260px, 46%);
+    height: 64%;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(247, 242, 233, 0.5);
 }
 
 .band-photo-placeholder {
@@ -761,6 +818,17 @@ section[id] {
     .gallery-item-large {
         grid-column: span 2;
         grid-row: span 1;
+    }
+
+    .band-photo-duo {
+        min-height: 320px;
+    }
+
+    .band-photo-alt {
+        width: min(320px, 62%);
+        height: 60%;
+        right: 0.85rem;
+        bottom: 0.85rem;
     }
 
     .video-grid {
