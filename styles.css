@@ -357,6 +357,10 @@ a {
     align-items: start;
 }
 
+.video-grid[hidden] {
+    display: none;
+}
+
 .video-card {
     background: var(--bg-soft);
     padding: 1.4rem;
