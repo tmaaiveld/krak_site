@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tmaaiveld.github.io/krak_site/sitemap.xml
+Sitemap: https://krakmusic.nl/sitemap.xml
