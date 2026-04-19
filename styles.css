@@ -386,6 +386,8 @@ a {
     display: grid;
     gap: 0.9rem;
     grid-column: span 6;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .video-card.wide {
@@ -433,6 +435,11 @@ a {
 
 .video-frame:has(iframe)::after {
     display: none;
+}
+
+.video-frame:has(iframe) {
+    padding: 0;
+    min-height: 0;
 }
 
 .video-frame iframe {
