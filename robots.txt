@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tmaaiveld.github.io/krak_site/sitemap.xml
