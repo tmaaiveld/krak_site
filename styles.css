@@ -997,7 +997,8 @@ section[id] {
     }
 
     .hero-media {
-        height: clamp(246px, 49vw, 322px);
+        height: auto;
+        aspect-ratio: 16 / 9;
     }
 
     .gallery-grid {
@@ -1018,6 +1019,10 @@ section[id] {
     .video-card.tall,
     .video-card.full {
         grid-column: 1 / -1;
+    }
+
+    .video-card.tall {
+        display: none;
     }
 }
 
